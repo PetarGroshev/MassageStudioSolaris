@@ -8,7 +8,7 @@ using StudioSolaris.Data;
 
 #nullable disable
 
-namespace StudioSolaris.Data.Migrations
+namespace StudioSolaris.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -235,26 +235,6 @@ namespace StudioSolaris.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("StudioSolaris.Data.Massage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Massage");
-                });
-
             modelBuilder.Entity("StudioSolaris.Data.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -301,8 +281,9 @@ namespace StudioSolaris.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MassagesId")
-                        .HasColumnType("int");
+                    b.Property<string>("Massage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -321,8 +302,6 @@ namespace StudioSolaris.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MassagesId");
 
                     b.HasIndex("ServicesTypesId");
 
@@ -447,12 +426,6 @@ namespace StudioSolaris.Data.Migrations
 
             modelBuilder.Entity("StudioSolaris.Data.Service", b =>
                 {
-                    b.HasOne("StudioSolaris.Data.Massage", "Massages")
-                        .WithMany("Services")
-                        .HasForeignKey("MassagesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("StudioSolaris.Data.ServiceType", "ServicesTypes")
                         .WithMany("Services")
                         .HasForeignKey("ServicesTypesId")
@@ -465,8 +438,6 @@ namespace StudioSolaris.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Massages");
-
                     b.Navigation("ServicesTypes");
 
                     b.Navigation("Specialists");
@@ -475,11 +446,6 @@ namespace StudioSolaris.Data.Migrations
             modelBuilder.Entity("StudioSolaris.Data.Client", b =>
                 {
                     b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("StudioSolaris.Data.Massage", b =>
-                {
-                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("StudioSolaris.Data.Service", b =>

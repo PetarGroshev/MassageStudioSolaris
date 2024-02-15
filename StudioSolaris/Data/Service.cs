@@ -4,8 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MassagesId { get; set; }
-        public Massage Massages { get; set; }
+        public string Massage { get; set; }
         public int ServicesTypeId { get; set; }
         public ServiceType ServicesTypes { get; set; }
         public string Decription { get; set; }

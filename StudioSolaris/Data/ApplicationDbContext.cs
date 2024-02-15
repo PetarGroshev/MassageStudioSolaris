@@ -12,7 +12,6 @@ namespace StudioSolaris.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
         public DbSet<ServiceType> ServicesTypes { get; set; }
-        public DbSet<Massage> Massage { get; set; }
         public DbSet<Specialist> Specialists { get; set; }
     }
 }
