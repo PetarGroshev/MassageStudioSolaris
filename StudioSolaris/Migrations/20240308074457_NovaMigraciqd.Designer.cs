@@ -12,15 +12,15 @@ using StudioSolaris.Data;
 namespace StudioSolaris.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240215110413_SolarisMigration")]
-    partial class SolarisMigration
+    [Migration("20240308074457_NovaMigraciqd")]
+    partial class NovaMigraciqd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -246,7 +246,7 @@ namespace StudioSolaris.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClientId")
+                    b.Property<string>("ClientsId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -258,11 +258,11 @@ namespace StudioSolaris.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientsId");
 
                     b.HasIndex("ServicesId");
 
-                    b.ToTable("Reservation");
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("StudioSolaris.Data.Service", b =>
@@ -284,21 +284,14 @@ namespace StudioSolaris.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Massage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("ServicesTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServicesTypesId")
+                    b.Property<int>("ServiceTypesId")
                         .HasColumnType("int");
 
                     b.Property<int>("SpecialistsId")
@@ -306,7 +299,7 @@ namespace StudioSolaris.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServicesTypesId");
+                    b.HasIndex("ServiceTypesId");
 
                     b.HasIndex("SpecialistsId");
 
@@ -412,7 +405,7 @@ namespace StudioSolaris.Migrations
                 {
                     b.HasOne("StudioSolaris.Data.Client", "Clients")
                         .WithMany("Reservations")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("ClientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -429,9 +422,9 @@ namespace StudioSolaris.Migrations
 
             modelBuilder.Entity("StudioSolaris.Data.Service", b =>
                 {
-                    b.HasOne("StudioSolaris.Data.ServiceType", "ServicesTypes")
+                    b.HasOne("StudioSolaris.Data.ServiceType", "ServiceTypes")
                         .WithMany("Services")
-                        .HasForeignKey("ServicesTypesId")
+                        .HasForeignKey("ServiceTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -441,7 +434,7 @@ namespace StudioSolaris.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ServicesTypes");
+                    b.Navigation("ServiceTypes");
 
                     b.Navigation("Specialists");
                 });

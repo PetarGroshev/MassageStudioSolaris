@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudioSolaris.Migrations
 {
     /// <inheritdoc />
-    public partial class SolarisMigration : Migration
+    public partial class NovaMigraciqd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -195,21 +195,19 @@ namespace StudioSolaris.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Massage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServicesTypeId = table.Column<int>(type: "int", nullable: false),
-                    ServicesTypesId = table.Column<int>(type: "int", nullable: false),
+                    ServiceTypesId = table.Column<int>(type: "int", nullable: false),
                     Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SpecialistsId = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Services_ServicesTypes_ServicesTypesId",
-                        column: x => x.ServicesTypesId,
+                        name: "FK_Services_ServicesTypes_ServiceTypesId",
+                        column: x => x.ServiceTypesId,
                         principalTable: "ServicesTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -222,26 +220,26 @@ namespace StudioSolaris.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservation",
+                name: "Reservations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ServicesId = table.Column<int>(type: "int", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.Id);
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservation_AspNetUsers_ClientId",
-                        column: x => x.ClientId,
+                        name: "FK_Reservations_AspNetUsers_ClientsId",
+                        column: x => x.ClientsId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservation_Services_ServicesId",
+                        name: "FK_Reservations_Services_ServicesId",
                         column: x => x.ServicesId,
                         principalTable: "Services",
                         principalColumn: "Id",
@@ -288,19 +286,19 @@ namespace StudioSolaris.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_ClientId",
-                table: "Reservation",
-                column: "ClientId");
+                name: "IX_Reservations_ClientsId",
+                table: "Reservations",
+                column: "ClientsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_ServicesId",
-                table: "Reservation",
+                name: "IX_Reservations_ServicesId",
+                table: "Reservations",
                 column: "ServicesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Services_ServicesTypesId",
+                name: "IX_Services_ServiceTypesId",
                 table: "Services",
-                column: "ServicesTypesId");
+                column: "ServiceTypesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Services_SpecialistsId",
@@ -327,7 +325,7 @@ namespace StudioSolaris.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Reservation");
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
