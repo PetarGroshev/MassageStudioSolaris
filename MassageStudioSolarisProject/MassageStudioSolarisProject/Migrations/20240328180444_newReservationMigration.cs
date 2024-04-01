@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MassageStudioSolarisProject.Migrations
 {
     /// <inheritdoc />
-    public partial class NovaMigraciqZANovPut : Migration
+    public partial class newReservationMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -227,6 +227,8 @@ namespace MassageStudioSolarisProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ServicesId = table.Column<int>(type: "int", nullable: false),
                     ClientsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReservationStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReservationEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

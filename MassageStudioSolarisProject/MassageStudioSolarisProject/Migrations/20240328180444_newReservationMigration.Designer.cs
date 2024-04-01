@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MassageStudioSolarisProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240313091038_NovaMigraciqZANovPut")]
-    partial class NovaMigraciqZANovPut
+    [Migration("20240328180444_newReservationMigration")]
+    partial class newReservationMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -114,6 +114,12 @@ namespace MassageStudioSolarisProject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReservationEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReservationStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ServicesId")

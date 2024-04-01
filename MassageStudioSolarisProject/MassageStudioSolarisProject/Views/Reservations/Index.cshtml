@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Резервации</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -19,6 +19,12 @@
                 @Html.DisplayNameFor(model => model.Clients)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ReservationStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationEndDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateModified)
             </th>
             <th></th>
@@ -31,7 +37,13 @@
                 @Html.DisplayFor(modelItem => item.Services.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Clients.UserName)
+                @Html.DisplayFor(modelItem => item.Clients.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationEndDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateModified)

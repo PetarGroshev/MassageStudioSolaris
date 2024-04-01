@@ -63,7 +63,7 @@ namespace MassageStudioSolarisProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServicesId")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("ServicesId,ReservationStartDate,ReservationEndDate,DateModified")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace MassageStudioSolarisProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["ClientsId"] = new SelectList(_context.Users, "Id", "Id", reservation.ClientsId);
-            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Id", reservation.ServicesId);
+            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Name", reservation.ServicesId);
             return View(reservation);
         }
 
@@ -91,8 +91,8 @@ namespace MassageStudioSolarisProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientsId"] = new SelectList(_context.Users, "Id", "Id", reservation.ClientsId);
-            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Id", reservation.ServicesId);
+            //ViewData["ClientsId"] = new SelectList(_context.Users, "Id", "Id", reservation.ClientsId);
+            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Name", reservation.ServicesId);
             return View(reservation);
         }
 
@@ -101,7 +101,7 @@ namespace MassageStudioSolarisProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ServicesId,DateModified")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ServicesId,ReservationStartDate,ReservationEndDate,DateModified")] Reservation reservation)
         {
             if (id != reservation.Id)
             {
@@ -112,8 +112,8 @@ namespace MassageStudioSolarisProject.Controllers
             {
                 try
                 {
+                    reservation.DateModified = DateTime.Now;
                     reservation.ClientsId = _userManager.GetUserId(User);
-                    reservation.DateModified  = DateTime.Now;
                     _context.Reservations.Update(reservation);
                     await _context.SaveChangesAsync();
                 }
@@ -131,7 +131,7 @@ namespace MassageStudioSolarisProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["ClientsId"] = new SelectList(_context.Users, "Id", "Id", reservation.ClientsId);
-            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Id", reservation.ServicesId);
+            ViewData["ServicesId"] = new SelectList(_context.Services, "Id", "Name", reservation.ServicesId);
             return View(reservation);
         }
 
