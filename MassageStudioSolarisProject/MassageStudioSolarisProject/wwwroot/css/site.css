@@ -19,4 +19,94 @@ html {
 
 body {
   margin-bottom: 60px;
+ 
+}
+#HomeSnimka img {
+    overflow: hidden;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+}
+
+#HomeSnimka p {
+    position: absolute;
+    top: 16%;
+    left: 50.5%;
+    text-align: center;
+    padding: 10px 20px;
+    color: white;
+    font-size: 25px;
+    font-family: 'Comic Sans MS', Times, serif;
+    transform: translate(-50%, -50%);
+    background-color: #047816;
+}
+#ZaNas{
+    display:flex;
+}
+.ZaNasSnimka{
+    width:50%
+}
+.ZaNasSnimka img{
+    width: 100%
+}
+
+.ZaNasTxt {
+    width: 50%;
+    padding: 15px;
+    text-align: justify;
+}
+.ZaNasTxt p{
+    font-size:23px;
+}
+.ServicesContainer {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.services:hover {
+    box-shadow: 0 0 10px 2px #868686;
+}
+.services {
+    border: 3px solid #959593;
+    width: 30%;
+    border-radius: 10px;
+    display: flex;
+    font-family: 'Comic Sans MS';
+    flex-direction: column;
+    margin-bottom: 15px;
+    position: relative;
+}
+.services img {
+    max-width: 500px;
+    height: 250px;
+    object-fit: contain;
+}
+.ServiceDescription {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 10px;
+}
+.col-sm-10 {
+    width: 50%;
+}
+
+.col-sm-2 {
+    width: 50%;
+}
+.Butoni {
+    display: flex;
+    justify-content: center;
+}
+.buttons {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 280px;
 }

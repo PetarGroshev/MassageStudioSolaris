@@ -49,7 +49,19 @@ namespace MassageStudioSolarisProject.Controllers
 
             return View(reservation);
         }
-
+        public async Task<IActionResult> CreateWithServiceId(int serviceId)
+        {
+            var currentService = await _context.Services.FirstOrDefaultAsync(z => z.Id == serviceId);
+            Reservation reservation = new Reservation();
+            //order.ProductsId = productId;
+            // productId = order.ProductsId;
+            reservation.ServicesId = serviceId;
+            reservation.ClientsId = _userManager.GetUserId(User);
+            var price =  currentService.Price;
+            _context.Reservations.Add(reservation);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Reservations/Create
         public IActionResult Create()
         {

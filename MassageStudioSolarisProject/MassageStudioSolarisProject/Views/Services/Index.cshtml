@@ -4,12 +4,79 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<center><h1>Масажни услуги</h1></center>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<div class="ServicesContainer">
+    @foreach (var item in Model)
+    {
+
+        <div class="services">
+            <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" />
+            <div class="ServiceDescription">
+                <div>
+                    <div>
+                        <dl class="row" style="position: relative;">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => item.Name)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Price)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => item.Price) <span>лв</span>
+                            </dd>
+                        </dl>
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="btnDiv">
+                            <div class="buttons">
+                                <a asp-action="Edit" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Редактирай</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Детайли</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Изтрий услугата</a>
+                            </div>
+                        </div>
+
+                    }
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <div class="Butoni">
+                            <div class="buttons">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a>
+                                <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@item.Id">
+                                    <input name="wineId" type="hidden" value="@item.Id" /> 
+                                    <input id="buyBtn" type="submit" value="Резервирай" class="btn btn-primary" />
+                                </form>
+                                <script>
+                                    document.querySelector("form").addEventListener("submit", function (e) {
+                                        e.preventDefault(); // Предотвратява изпращането на стандартната POST заявка
+
+                                      
+
+                                        window.location.href = '@Url.Action("CreateWithServiceId", "Reservations")
+                                             '&serviceId=' + @item.Id;
+                                        // Пренасочва към контролера и действието с подадената стойност на текстовото поле като параметър
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+
+
+
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -68,4 +135,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@

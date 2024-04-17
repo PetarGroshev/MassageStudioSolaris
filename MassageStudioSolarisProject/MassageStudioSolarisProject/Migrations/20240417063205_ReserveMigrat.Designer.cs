@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MassageStudioSolarisProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240328180444_newReservationMigration")]
-    partial class newReservationMigration
+    [Migration("20240417063205_ReserveMigrat")]
+    partial class ReserveMigrat
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

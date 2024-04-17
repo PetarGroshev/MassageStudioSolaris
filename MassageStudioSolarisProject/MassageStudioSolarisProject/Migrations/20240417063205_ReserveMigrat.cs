@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MassageStudioSolarisProject.Migrations
 {
     /// <inheritdoc />
-    public partial class newReservationMigration : Migration
+    public partial class ReserveMigrat : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
