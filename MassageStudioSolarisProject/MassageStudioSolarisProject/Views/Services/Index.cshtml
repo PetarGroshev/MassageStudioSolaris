@@ -3,17 +3,76 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<style>
+    .centerpiton {
+        display: flex;
+        justify-content: center;
+    
+    }
+    .ServicesContainer{
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        flex-direction: row;
+    }
+</style>
 <center><h1>Масажни услуги</h1></center>
+@if (User.IsInRole("Admin"))
+{
+    <center><a asp-action="Create" class="btn btn-primary">Създай услуга</a></center>
+}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<hr />
 <div class="ServicesContainer">
     @foreach (var item in Model)
     {
-
         <div class="services">
+            <a asp-action="Details" asp-route-id="@item.Id"><div class="serviceImg"><img src="@Html.DisplayFor(modelItem => item.ImageUrl)" /> </div></a>
+            <div class="service-description">
+                <div>
+                    <div>
+                        <dl class="row" style="position: relative;">
+                            <div class="description">
+                               <dt class="ServiceHeading">
+                                   Име на услугата:
+                               </dt>
+                                <dd class="ServiceInfo">
+                                    @Html.DisplayFor(model => item.Name)
+                                </dd>
+                                <dt class="ServiceHeading">
+                                    Цена:
+                                </dt>
+                                <dd class="Item">
+                                    @Html.DisplayFor(model => item.Price) лв.
+                                </dd>
+                            </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="AdminBtn">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Редактирай</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Изтрий</a>
+                                </div>
+                            }
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <div class="buttons">
+                                    <form method="get" asp-controller="Orders" asp-action="CreateWithServiceId" asp-route-wineId="@item.Id">
+                                        <input name="serviceId" type="hidden" value="@item.Id" />
+                                        <input id="reserveBtn" type="submit" value="Резервирай" class="btn btn-primary" />
+                                    </form>
+
+                                </div>
+
+                            }
+                        </dl>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+       @*  <div class="services">
             <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" />
             <div class="ServiceDescription">
                 <div>
@@ -46,34 +105,21 @@
                     }
                     @if (!User.IsInRole("Admin"))
                     {
-                        <div class="Butoni">
-                            <div class="buttons">
+                        <div class="centerpiton">
+                            <div class="Butoni">
+
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a>
                                 <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@item.Id">
-                                    <input name="wineId" type="hidden" value="@item.Id" /> 
+                                    <input name="wineId" type="hidden" value="@item.Id" />
                                     <input id="buyBtn" type="submit" value="Резервирай" class="btn btn-primary" />
                                 </form>
-                                <script>
-                                    document.querySelector("form").addEventListener("submit", function (e) {
-                                        e.preventDefault(); // Предотвратява изпращането на стандартната POST заявка
 
-                                      
-
-                                        window.location.href = '@Url.Action("CreateWithServiceId", "Reservations")
-                                             '&serviceId=' + @item.Id;
-                                        // Пренасочва към контролера и действието с подадената стойност на текстовото поле като параметър
-                                    });
-                                </script>
                             </div>
                         </div>
-
-
-
-
                     }
                 </div>
             </div>
-        </div>
+        </div> *@
     }
 </div>
 @* <table class="table">
