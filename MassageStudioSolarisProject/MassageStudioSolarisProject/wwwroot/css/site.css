@@ -28,7 +28,12 @@ body {
     height: auto;
     border-radius: 3px;
 }
-
+.Heading {
+    font-family: 'Comic Sans MS';
+    color: #1887AE;
+    text-shadow: 1px 1px #601F20;
+    font-weight: 750;
+}
 #HomeSnimka p {
     position: absolute;
     top: 10%;
@@ -40,7 +45,7 @@ body {
     font-family: 'Comic Sans MS', Times, serif;
     transform: translate(-50%, -50%);
     background-color: #047816;
-    text-shadow:2px 2px black
+    text-shadow: 2px 2px black
 }
 #ZaNas{
     display:flex;
@@ -56,9 +61,13 @@ body {
     width: 50%;
     padding: 15px;
     text-align: justify;
+    
 }
     .ZaNasTxt p {
-        font-size: 23px;
+        font-size: 21px;
+        background-color: cornsilk;
+        padding:14px;
+        font-family: 'Comic Sans MS';
     }
 .services {
     border: 3px solid #959593;

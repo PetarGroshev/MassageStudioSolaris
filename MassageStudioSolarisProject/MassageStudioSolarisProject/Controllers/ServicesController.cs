@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MassageStudioSolarisProject.Data;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MassageStudioSolarisProject.Controllers
 {
@@ -19,10 +20,22 @@ namespace MassageStudioSolarisProject.Controllers
         }
 
         // GET: Services
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Services.Include(s => s.ServiceTypes).Include(s => s.Specialists);
-            return View(await applicationDbContext.ToListAsync());
+            if (searchString.IsNullOrEmpty())
+            {
+                return View(await _context.Services.ToListAsync());
+            }
+            if (_context.Services == null)
+            {
+                return Problem("Context is empty");
+            }
+            var services = from m in _context.Services select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                services = services.Where(s => s.Name.Contains(searchString));
+            }
+            return View(services.ToList());
         }
 
         // GET: Services/Details/5
