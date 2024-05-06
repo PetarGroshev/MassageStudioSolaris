@@ -3,34 +3,56 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style>
+    body {
+        background-color:turquoise;
+    }
 
-<h1>Details</h1>
+    .detailedBtn a {
+        background-color: #7373E3;
+        border-color: #2A2AD1;
+    }
 
-<div>
-    <h4>Specialist</h4>
+    .detailedBtn a:hover {
+            background-color: #4D4DDB;
+            border-color: #2A2AD1;
+    }
+</style>
+
+<h1>Данни за специалиста</h1>
+<div class="background">
+  
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            Име:
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
+            Фамилия:
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
+        @if (User.IsInRole("Admin"))
+        {
+            <dt class="col-sm-2">
+                Дата на промяна на данните:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateModified)
+            </dd>
+        }
+ 
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (User.IsInRole("Admin"))
+{
+    <div class="detailedBtn">
+        <a class="btn btn-primary" id="edit" asp-action="Edit" asp-route-id="@Model?.Id">Редакция на данни</a>
+        <a class="btn btn-primary" id="back" asp-action="Index">Назад</a>
+    </div>
+}
+

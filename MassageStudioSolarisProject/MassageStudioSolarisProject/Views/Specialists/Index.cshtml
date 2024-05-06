@@ -3,14 +3,19 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    thead{
+        background-color:lightsteelblue;
+    }
 
+</style>
 <center><h1>Масажисти в нашето студио </h1></center>
 @if (User.IsInRole("Admin"))
 {
     <center> <a class="btn btn-primary" asp-action="Create">Добави масажист</a></center>
 }
 <br />
-<table class="table table-hover">
+<table class="table table-hover table-bordered">
     <thead>
         <tr>
             <th         >

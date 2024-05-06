@@ -7,20 +7,51 @@
     .centerpiton {
         display: flex;
         justify-content: center;
-    
     }
-    .ServicesContainer{
+
+    .ServicesContainer {
         padding: 10px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
         flex-direction: row;
     }
+
+    .services {
+        background-color: white;
+    }
+
+    body {
+        background: rgb(225,255,251);
+        background: linear-gradient(90deg, rgba(225,255,251,1) 0%, rgba(152,216,242,1) 100%);
+    }
+
+    #btn a {
+        background-color: #7373E3;
+        border-color: #2A2AD1;
+    }
+
+    input[type=submit] {
+        background-color: #7373E3;
+        border-color: #2A2AD1;
+        width: 10   0px;
+        font-family: cursive;
+        
+    }
+
+        input[type=submit]:hover {
+            background-color: #4D4DDB;
+            border-color: #2A2AD1;
+        }
+
+  
+
+
 </style>
 <center class="Heading"><h1>Масажни услуги</h1></center>
 @if (User.IsInRole("Admin"))
 {
-    <center><a asp-action="Create" class="btn btn-primary">Създай услуга</a></center>
+    <center id="btn"><a asp-action="Create" class="btn btn-primary">Създай услуга</a></center>
 }
 
 <hr />
@@ -34,9 +65,9 @@
                     <div>
                         <dl class="row" style="position: relative;">
                             <div class="description">
-                               <dt class="ServiceHeading">
-                                   Име на услугата:
-                               </dt>
+                                <dt class="ServiceHeading">
+                                    Име на услугата:
+                                </dt>
                                 <dd class="ServiceInfo">
                                     @Html.DisplayFor(model => item.Name)
                                 </dd>
@@ -54,15 +85,31 @@
                                     <a asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Изтрий</a>
                                 </div>
                             }
-                            @if (!User.IsInRole("Admin"))
+                            else
                             {
-                                <div class="buttons">
-                                    <form method="get" asp-controller="Orders" asp-action="CreateWithServiceId" asp-route-wineId="@item.Id">
-                                        <input name="serviceId" type="hidden" value="@item.Id" />
-                                        <input id="reserveBtn" type="submit" value="Резервирай" class="btn btn-primary" />
-                                    </form>
+                               
+                                    <div class="buttons">
 
-                                </div>
+                                        <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@item.Id">
+                                            <label>Начален час на резервацията</label>
+                                            <br />
+                                            <input name="serviceId" type="hidden" value="@item.Id" />
+                                            <input type="datetime-local" id="dateStart" name="startDate">
+                                            <br />
+                                            <label>Краен час на резервацията</label>
+                                            <br />
+
+
+                                            <input type="datetime-local" id="dateEnd" name="endDate">
+
+                                            <input id="reserveBtn" type="submit" value="Резервирай" class="btn btn-primary" />
+                                        </form>
+
+
+                                    </div>
+                                
+                         
+                               
 
                             }
                         </dl>
@@ -72,54 +119,54 @@
                 </div>
             </div>
         </div>
-       @*  <div class="services">
-            <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" />
-            <div class="ServiceDescription">
-                <div>
-                    <div>
-                        <dl class="row" style="position: relative;">
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Name)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => item.Name)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Price)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => item.Price) <span>лв</span>
-                            </dd>
-                        </dl>
-                    </div>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <div class="btnDiv">
-                            <div class="buttons">
-                                <a asp-action="Edit" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Редактирай</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Детайли</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Изтрий услугата</a>
-                            </div>
-                        </div>
+        @*  <div class="services">
+    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" />
+    <div class="ServiceDescription">
+    <div>
+    <div>
+    <dl class="row" style="position: relative;">
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class="col-sm-10">
+    @Html.DisplayFor(model => item.Name)
+    </dd>
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Price)
+    </dt>
+    <dd class="col-sm-10">
+    @Html.DisplayFor(model => item.Price) <span>лв</span>
+    </dd>
+    </dl>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+    <div class="btnDiv">
+    <div class="buttons">
+    <a asp-action="Edit" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Редактирай</a>
+    <a asp-action="Details" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Детайли</a>
+    <a asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Изтрий услугата</a>
+    </div>
+    </div>
 
-                    }
-                    @if (!User.IsInRole("Admin"))
-                    {
-                        <div class="centerpiton">
-                            <div class="Butoni">
+    }
+    @if (!User.IsInRole("Admin"))
+    {
+    <div class="centerpiton">
+    <div class="Butoni">
 
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a>
-                                <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@item.Id">
-                                    <input name="wineId" type="hidden" value="@item.Id" />
-                                    <input id="buyBtn" type="submit" value="Резервирай" class="btn btn-primary" />
-                                </form>
+    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a>
+    <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@item.Id">
+    <input name="wineId" type="hidden" value="@item.Id" />
+    <input id="buyBtn" type="submit" value="Резервирай" class="btn btn-primary" />
+    </form>
 
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div> *@
+    </div>
+    </div>
+    }
+    </div>
+    </div>
+    </div> *@
     }
 </div>
 @* <table class="table">

@@ -3,57 +3,80 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    thead {
+        background-color: lightsteelblue;
+    }
+</style>
+<center class="Heading"><h1>Резервации</h1></center>
 
-<h1>Резервации</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<br />
+<table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Services)
+                Резервирана услуга
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    Резервирана от
+                </th>
+
+            }
+
+            <th>
+                Начален час
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clients)
+                Краен час
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReservationStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReservationEndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    Дата на промяна
+                </th>
+            }
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Services.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Clients.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservationStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservationEndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Services.Name)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @item.Clients.FirstName  @item.Clients.LastName
+                    </td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservationStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservationEndDate)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateModified)
+                    </td>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a class="btn btn-primary"asp-action="Edit" asp-route-id="@item.Id">Редакция</a>
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Детайли</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Изтрий        </a>
+                    </td>
+                }
+
+            </tr>
+        }
     </tbody>
 </table>

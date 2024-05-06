@@ -3,58 +3,152 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style>
+    .detailedBtn a {
+        background-color: #7373E3;
+        border-color: #2A2AD1;
+    }
 
-<center><h1>Детайли за масажна услугата </h1></center>
+        .detailedBtn a:hover {
+            background-color: #4D4DDB;
+            border-color: #2A2AD1;
+        }
+        .Image{
+        width: 50%;
+    
+        display: flex;
+        justify-content: center;
+        }
 
-<div>
-   
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ServiceTypes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ServiceTypes.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Decription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Decription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specialists)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specialists.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src="@Html.DisplayFor(model => model.ImageUrl)" width="220"/>
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-    </dl>
+    .Image img{
+            border: 2px solid black;
+            border-radius: 3%;
+            width:530px;
+    }
+        .serviceDetail{
+        padding: 50px;
+        text-align: justify;
+        background-color: #9EF2B1; 
+        border: 2px solid black;
+        border-radius:5%;
+        display: flex;
+        justify-content: center;
+        width: 50%;
+        margin-left:140px
+        
+    }
+        .detail{
+        font-weight: bold;
+        font-family: cursive;
+        width:100%;
+        }
+
+    .detailMore{
+       
+        font-family: cursive;
+        width: 100%;
+    }
+        .info{
+        display: flex;
+        }
+        input[type=submit]{
+        background-color: #7373E3;
+        border-color: #2A2AD1;
+        width:180px;
+        font-family:cursive;
+          
+        }
+
+    input[type=submit]:hover {
+            background-color: #4D4DDB;
+            border-color: #2A2AD1;
+    }
+
+    body {
+        background: rgb(225,255,251);
+        background: linear-gradient(90deg, rgba(225,255,251,1) 0%, rgba(152,216,242,1) 100%);
+    }
+    h1{
+        color: #11812A;
+        text-shadow:1px 1px black;
+    }
+
+    .serviceDetails{
+        display: flex;
+        justify-content: center;
+       
+    }
+</style>
+<center><h1>@Html.DisplayFor(model => model.Name) </h1></center>
+
+<div class="serviceDetails" >
+  
+    <div class="info">
+       <div class="Image">
+            <img src="@Html.DisplayFor(model => model.ImageUrl) "  />
+       </div>
+
+            <div class="serviceDetail">
+                <dl>
+                    <dd class="detail">
+                        Вид на услугата:
+                    </dd>
+                    <dd class="detailMore">
+                        @Html.DisplayFor(model => model.ServiceTypes.Name)
+                    </dd>
+                <dt class="detail">
+                    Масажен Специалист:
+                </dt>
+                <dd class="detailMore">
+                    @Html.DisplayFor(model => model.Specialists.FirstName)
+                    @Html.DisplayFor(model => model.Specialists.LastName)
+                </dd>
+                <dt class="detail">
+                        Описание:
+                    </dt>
+                <dd class="detailMore">
+                        @Html.DisplayFor(model => model.Decription)
+                    </dd>
+
+
+                <dd class="detail">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </dd>
+                <dd class="detailMore">
+                        @Html.DisplayFor(model => model.Price) лв.
+                    </dd>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                    <dd class="detail">
+                            Дата на промяна:
+                        </dd>
+                    <dd class="detailMore">
+                            @Html.DisplayFor(model => model.DateAdded)
+                    </dd>
+                    <div class="detailedBtn">
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Редакция</a> 
+                        <a class="btn btn-primary" asp-action="Index">Назад</a>
+                    </div>
+                }
+                else
+                {
+                    <dd >
+                        <form method="get" asp-controller="Reservations" asp-action="CreateWithServiceId" asp-route-serviceId="@Model?.Id">
+                            <input name="serviceId" type="hidden" value="@Model?.Id" />
+                            <input id="reserveBtn" type="submit" value="Резервирай" class="btn btn-primary" />
+                        </form>
+
+                    </dd>
+                }
+
+                </dl>
+           
+       </div>
+
+
+   </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
